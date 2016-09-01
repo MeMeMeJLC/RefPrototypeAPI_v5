@@ -25,6 +25,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <ApplicationInsightsResourceId>/subscriptions/33064a16-0403-49a0-a889-f99956fbae78/resourcegroups/Default-ApplicationInsights-CentralUS/providers/microsoft.insights/components/RefPrototypeAPI_v5</ApplicationInsightsResourceId>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -44,6 +45,34 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.AI.Agent.Intercept, Version=1.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.1.2.1\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.DependencyCollector, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.DependencyCollector.2.1.0\lib\net45\Microsoft.AI.DependencyCollector.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.PerfCounterCollector, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.PerfCounterCollector.2.1.0\lib\net45\Microsoft.AI.PerfCounterCollector.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.ServerTelemetryChannel, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.1.0\lib\net45\Microsoft.AI.ServerTelemetryChannel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.Web, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Web.2.1.0\lib\net45\Microsoft.AI.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.WindowsServer, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.2.1.0\lib\net45\Microsoft.AI.WindowsServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationInsights, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.2.1.0\lib\net45\Microsoft.ApplicationInsights.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
@@ -52,6 +81,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -206,14 +236,165 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\gamesController.cs" />
+    <Compile Include="Controllers\game_incidentController.cs" />
+    <Compile Include="Controllers\game_locationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\incidentsController.cs" />
+    <Compile Include="Controllers\playersController.cs" />
+    <Compile Include="Controllers\refereesController.cs" />
+    <Compile Include="Controllers\teamsController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\game.cs">
+      <DependentUpon>GameModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GameIncidentModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GameIncidentModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GameIncidentModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GameIncidentModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GameIncidentModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GameIncidentModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GameLocationModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GameLocationModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GameLocationModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GameLocationModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GameLocationModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GameLocationModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GameModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GameModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GameModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GameModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GameModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GameModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\game_incident.cs">
+      <DependentUpon>GameIncidentModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\game_location.cs">
+      <DependentUpon>GameLocationModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\goal.cs">
+      <DependentUpon>GoalModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GoalModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GoalModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GoalModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GoalModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GoalModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GoalModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\incident.cs">
+      <DependentUpon>IncidentModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\IncidentModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IncidentModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\IncidentModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IncidentModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\IncidentModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IncidentModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\player.cs">
+      <DependentUpon>PlayerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PlayerModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PlayerModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PlayerModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PlayerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PlayerModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PlayerModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\referee.cs">
+      <DependentUpon>RefereeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RefereeModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RefereeModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RefereeModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RefereeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RefereeModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RefereeModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\team.cs">
+      <DependentUpon>TeamModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TeamModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TeamModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TeamModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TeamModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TeamModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TeamModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
@@ -226,6 +407,88 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Models\GameIncidentModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>GameIncidentModel.edmx</DependentUpon>
+      <LastGenOutput>GameIncidentModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\GameIncidentModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>GameIncidentModel.edmx</DependentUpon>
+      <LastGenOutput>GameIncidentModel.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\GameLocationModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>GameLocationModel.edmx</DependentUpon>
+      <LastGenOutput>GameLocationModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\GameLocationModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>GameLocationModel.edmx</DependentUpon>
+      <LastGenOutput>GameLocationModel.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\GameModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>GameModel.edmx</DependentUpon>
+      <LastGenOutput>GameModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\GameModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>GameModel.edmx</DependentUpon>
+      <LastGenOutput>GameModel.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\GoalModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>GoalModel.edmx</DependentUpon>
+      <LastGenOutput>GoalModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\GoalModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>GoalModel.edmx</DependentUpon>
+      <LastGenOutput>GoalModel.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\IncidentModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>IncidentModel.edmx</DependentUpon>
+      <LastGenOutput>IncidentModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\IncidentModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>IncidentModel.edmx</DependentUpon>
+      <LastGenOutput>IncidentModel.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\PlayerModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>PlayerModel.edmx</DependentUpon>
+      <LastGenOutput>PlayerModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\PlayerModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>PlayerModel.edmx</DependentUpon>
+      <LastGenOutput>PlayerModel.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\RefereeModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>RefereeModel.edmx</DependentUpon>
+      <LastGenOutput>RefereeModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\RefereeModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>RefereeModel.edmx</DependentUpon>
+      <LastGenOutput>RefereeModel.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\TeamModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>TeamModel.edmx</DependentUpon>
+      <LastGenOutput>TeamModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\TeamModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>TeamModel.edmx</DependentUpon>
+      <LastGenOutput>TeamModel.cs</LastGenOutput>
+    </Content>
+    <Content Include="Scripts\ai.0.22.19-build00125.js" />
+    <Content Include="Scripts\ai.0.22.19-build00125.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
@@ -247,6 +510,66 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
+    <Content Include="ApplicationInsights.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <EntityDeploy Include="Models\TeamModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>TeamModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\TeamModel.edmx.diagram">
+      <DependentUpon>TeamModel.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Models\PlayerModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>PlayerModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\PlayerModel.edmx.diagram">
+      <DependentUpon>PlayerModel.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Models\GameModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>GameModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\GameModel.edmx.diagram">
+      <DependentUpon>GameModel.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Models\IncidentModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>IncidentModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\IncidentModel.edmx.diagram">
+      <DependentUpon>IncidentModel.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Models\RefereeModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>RefereeModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\RefereeModel.edmx.diagram">
+      <DependentUpon>RefereeModel.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Models\GameLocationModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>GameLocationModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\GameLocationModel.edmx.diagram">
+      <DependentUpon>GameLocationModel.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Models\GameIncidentModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>GameIncidentModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\GameIncidentModel.edmx.diagram">
+      <DependentUpon>GameIncidentModel.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Models\GoalModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>GoalModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\GoalModel.edmx.diagram">
+      <DependentUpon>GoalModel.edmx</DependentUpon>
+    </Content>
+    <None Include="Properties\PublishProfiles\RefPrototypeAPIv5.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -273,6 +596,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Service References\Application Insights\ConnectedService.json" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -284,6 +608,12 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
