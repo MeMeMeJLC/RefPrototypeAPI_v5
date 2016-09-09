@@ -35,6 +35,19 @@ namespace RefPrototypeAPI_v5.Controllers
             return Ok(referee);
         }
 
+        // GET: api/referees?referee_lastname={referee_lastname}
+        public IEnumerable<referee> GetRefereesByLastname(string referee_lastname)
+        {
+            var referees = db.referees.Where(t => t.referee_lastname == referee_lastname).ToList();
+            if (referees == null || !referees.Any())
+            {
+                //throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
+                return referees;
+            }
+
+            return referees;
+        }
+
         // PUT: api/referees/5
         [ResponseType(typeof(void))]
         public IHttpActionResult Putreferee(int id, referee referee)
