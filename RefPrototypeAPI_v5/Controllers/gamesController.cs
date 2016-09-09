@@ -61,6 +61,34 @@ namespace RefPrototypeAPI_v5.Controllers
             return games;
         }
 
+        // GET: api/games?game_date={game_date}
+        public IEnumerable<game> GetGamesByGame_date(DateTime game_date)
+        {
+            var games = db.games.Where(t => t.game_date == game_date).ToList();
+            Console.WriteLine(game_date);
+            if (games == null || !games.Any())
+            {
+                //throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
+                return games;
+            }
+
+            return games;
+        }
+
+        // GET: api/games?game_time={game_time}
+        public IEnumerable<game> GetGamesByGameTime(TimeSpan game_time)
+        {
+            var games = db.games.Where(t => t.game_time == game_time).ToList();
+            Console.WriteLine(game_time);
+            if (games == null || !games.Any())
+            {
+                //throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
+                return games;
+            }
+
+            return games;
+        }
+
         // GET: api/games?team_id={team_id}
         public IEnumerable<game> GetGamesByTeamID(int team_id)
         {
