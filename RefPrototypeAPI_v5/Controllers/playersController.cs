@@ -48,23 +48,31 @@ namespace RefPrototypeAPI_v5.Controllers
             return players;
         }
 
-        // GET: api/players?team_id={0}    
-       /* [ResponseType(typeof(player))]
-        public IQueryable<player> GetplayersByTeam(int team_id)
+        // GET: api/players?player_lastname={player_lastname}
+        public IEnumerable<player> GetPlayersByLastname(string player_lastname)
         {
-             player player = db.players.Find(team_id);
-            if (player == null)
+            var players = db.players.Where(t => t.player_lastname == player_lastname).ToList();
+            if (players == null || !players.Any())
             {
-                // return NotFound();
-                Console.WriteLine("no players");
-                return db.players;
-            }
-            else
-            {
-                return db.players;
+                //throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
+                return players;
             }
 
-        }*/
+            return players;
+        }
+
+        // GET: api/players?player_number={0}
+        public IEnumerable<player> GetPlayersByPlayerNumber(int player_number)
+        {
+            var players = db.players.Where(t => t.player_number == player_number).ToList();
+            if (players == null || !players.Any())
+            {
+                //throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
+                return players;
+            }
+
+            return players;
+        }
 
         // PUT: api/players/5
         [ResponseType(typeof(void))]

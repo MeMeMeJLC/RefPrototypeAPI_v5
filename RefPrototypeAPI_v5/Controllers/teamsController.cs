@@ -35,6 +35,32 @@ namespace RefPrototypeAPI_v5.Controllers
             return Ok(team);
         }
 
+        // GET: api/teams?team_name={team_name}
+        public IEnumerable<team> GetTeamsByTeamName(string team_name)
+        {
+            var teams = db.teams.Where(t => t.team_name == team_name).ToList();
+            if (teams == null || !teams.Any())
+            {
+                //throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
+                return teams;
+            }
+
+            return teams;
+        }
+
+        // GET: api/teams?team_coach_last_name={team_coach_last_name}
+        public IEnumerable<team> GetTeamsByCoachLastname(string team_coach_lastname)
+        {
+            var teams = db.teams.Where(t => t.team_coach_last_name == team_coach_lastname).ToList();
+            if (teams == null || !teams.Any())
+            {
+                //throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
+                return teams;
+            }
+
+            return teams;
+        }
+
         // PUT: api/teams/5
         [ResponseType(typeof(void))]
         public IHttpActionResult Putteam(int id, team team)
