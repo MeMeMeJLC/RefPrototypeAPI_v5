@@ -35,6 +35,24 @@ namespace RefPrototypeAPI_v5.Controllers
             return Ok(player);
         }
 
+        // GET: api/players/by_team/{0}    
+       /* [ResponseType(typeof(player))]
+        public IQueryable<player> GetplayersByTeam(int team_id)
+        {
+             player player = db.players.Find(team_id);
+            if (player == null)
+            {
+                // return NotFound();
+                Console.WriteLine("no players");
+                return db.players;
+            }
+            else
+            {
+                return db.players;
+            }
+
+        }*/
+
         // PUT: api/players/5
         [ResponseType(typeof(void))]
         public IHttpActionResult Putplayer(int id, player player)
