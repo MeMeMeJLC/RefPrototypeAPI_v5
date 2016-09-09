@@ -35,7 +35,20 @@ namespace RefPrototypeAPI_v5.Controllers
             return Ok(player);
         }
 
-        // GET: api/players/by_team/{0}    
+        // GET: api/players?team_id={0}
+        public IEnumerable<player> GetPlayersByTeam(int team_id)
+        {
+            var players = db.players.Where(t => t.team_id == team_id).ToList();
+            if (players == null || !players.Any())
+            {
+                //throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
+                return players;
+            }
+
+            return players;
+        }
+
+        // GET: api/players?team_id={0}    
        /* [ResponseType(typeof(player))]
         public IQueryable<player> GetplayersByTeam(int team_id)
         {
