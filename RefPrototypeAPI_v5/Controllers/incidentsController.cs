@@ -22,7 +22,7 @@ namespace RefPrototypeAPI_v5.Controllers
             return db.incidents;
         }
 
-        // GET: api/incidents/5
+        // GET: api/incidents/{incident_type}
         [ResponseType(typeof(incident))]
         public IHttpActionResult Getincident(string id)
         {
@@ -33,6 +33,20 @@ namespace RefPrototypeAPI_v5.Controllers
             }
 
             return Ok(incident);
+        }
+
+        // GET: api/incidents?incident_description={incident_description}
+        //needs exact match of string
+        public IEnumerable<incident> GetIncidentByDescription(string incident_description)
+        {
+            var incidents = db.incidents.Where(t => t.incident_description == incident_description).ToList();
+            if (incidents == null || !incidents.Any())
+            {
+                //throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
+                return incidents;
+            }
+
+            return incidents;
         }
 
         // PUT: api/incidents/5

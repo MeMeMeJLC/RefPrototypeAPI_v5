@@ -35,6 +35,48 @@ namespace RefPrototypeAPI_v5.Controllers
             return Ok(game);
         }
 
+        // GET: api/games?location_id={location_id}
+        public IEnumerable<game> GetGamesByLocationID(int location_id)
+        {
+            var games = db.games.Where(t => t.location_id == location_id).ToList();
+            if (games == null || !games.Any())
+            {
+                //throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
+                return games;
+            }
+
+            return games;
+        }
+        
+        // GET: api/games?referee_id={referee_id}
+        public IEnumerable<game> GetGamesByRefereeID(int referee_id)
+        {
+            var games = db.games.Where(t => t.referee_id == referee_id).ToList();
+            if (games == null || !games.Any())
+            {
+                //throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
+                return games;
+            }
+
+            return games;
+        }
+
+        // GET: api/games?team_id={team_id}
+        public IEnumerable<game> GetGamesByTeamID(int team_id)
+        {
+            var games_team_one = db.games.Where(t => t.team_one_id == team_id).ToList();
+            var games_team_two = db.games.Where(t => t.team_two_id == team_id).ToList();
+            var games = games_team_one.Concat(games_team_two);
+            if (games == null || !games.Any())
+            {
+                //throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
+                return games;
+            }
+
+            return games;
+        }
+
+
         // PUT: api/games/5
         [ResponseType(typeof(void))]
         public IHttpActionResult Putgame(int id, game game)
