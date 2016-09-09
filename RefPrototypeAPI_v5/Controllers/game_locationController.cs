@@ -35,6 +35,19 @@ namespace RefPrototypeAPI_v5.Controllers
             return Ok(game_location);
         }
 
+        // GET: api/game_locations?location_name={location_name}
+        public IEnumerable<game_location> GetGameLocationByLocationName(string location_name)
+        {
+            var game_locations = db.game_location.Where(t => t.location_name == location_name).ToList();
+            if (game_locations == null || !game_locations.Any())
+            {
+                //throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
+                return game_locations;
+            }
+
+            return game_locations;
+        }
+
         // PUT: api/game_location/5
         [ResponseType(typeof(void))]
         public IHttpActionResult Putgame_location(int id, game_location game_location)
