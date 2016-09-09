@@ -35,6 +35,58 @@ namespace RefPrototypeAPI_v5.Controllers
             return Ok(game_incident);
         }
 
+        // GET: api/game_incident?game_id={game_id}
+        public IEnumerable<game_incident> GetGamesIncidentsByGameId(int game_id)
+        {
+            var game_incidents = db.game_incident.Where(t => t.game_id == game_id).ToList();
+            if (game_incidents == null || !game_incidents.Any())
+            {
+                //throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
+                return game_incidents;
+            }
+
+            return game_incidents;
+        }
+
+        // GET: api/game_incident?player_id={player_id}
+        public IEnumerable<game_incident> GetGamesIncidentsByPlayerId(int player_id)
+        {
+            var game_incidents = db.game_incident.Where(t => t.player_id == player_id).ToList();
+            if (game_incidents == null || !game_incidents.Any())
+            {
+                //throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
+                return game_incidents;
+            }
+
+            return game_incidents;
+        }
+
+        // GET: api/game_incident?incident_type={incident_type}
+        public IEnumerable<game_incident> GetGamesIncidentsByIncidentType(string incident_type)
+        {
+            var game_incidents = db.game_incident.Where(t => t.incident_type == incident_type).ToList();
+            if (game_incidents == null || !game_incidents.Any())
+            {
+                //throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
+                return game_incidents;
+            }
+
+            return game_incidents;
+        }
+
+        // GET: api/game_incident?incident_time={incident_time}
+        public IEnumerable<game_incident> GetGamesIncidentsByIncidentTime(int incident_time)
+        {
+            var game_incidents = db.game_incident.Where(t => t.incident_time == incident_time).ToList();
+            if (game_incidents == null || !game_incidents.Any())
+            {
+                //throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
+                return game_incidents;
+            }
+
+            return game_incidents;
+        }
+
         // PUT: api/game_incident/5
         [ResponseType(typeof(void))]
         public IHttpActionResult Putgame_incident(int id, game_incident game_incident)

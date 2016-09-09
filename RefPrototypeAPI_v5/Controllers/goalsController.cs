@@ -35,6 +35,92 @@ namespace RefPrototypeAPI_v5.Controllers
             return Ok(goal);
         }
 
+        // GET: api/goals?game_id={game_id}
+        public IEnumerable<goal> GetGoalsByGame(int game_id)
+        {
+            var goals = db.goals.Where(t => t.game_id == game_id).ToList();
+            if (goals == null || !goals.Any())
+            {
+                //throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
+                return goals;
+            }
+
+            return goals;
+        }
+
+        // GET: api/goals?player_id={player_id}
+        public IEnumerable<goal> GetGoalsByPlayerId(int player_id)
+        {
+            var goals = db.goals.Where(t => t.player_id == player_id).ToList();
+            if (goals == null || !goals.Any())
+            {
+                //throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
+                return goals;
+            }
+
+            return goals;
+        }
+
+        // GET: api/goals?is_own_goal={is_own_goal}
+        public IEnumerable<goal> GetGoalsByIsOwnGoal(bool is_own_goal)
+        {
+            var goals = db.goals.Where(t => t.is_own_goal == is_own_goal).ToList();
+            if (goals == null || !goals.Any())
+            {
+                //throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
+                return goals;
+            }
+
+            return goals;
+        }
+
+        // GET: api/goals?game_id={game_id}
+        public /*IEnumerable<goal>*/ string GetGoalsByTeamAndGame(int game_goals_id)
+        {
+            var url = "http://localhost:50588/api/teams";
+            var url_param = "?game_id=1";
+            var goals = db.goals.Where(t => t.game_id == game_goals_id).ToList();
+            var total_goals = 0;
+            var team_one_goals = 0;
+            var team_two_goals = 0;
+            var num_of_teams = 0;
+            //var int team_two;
+            foreach (var goal in goals)
+            {
+                //run a get request for team
+                HttpClient client = new HttpClient();
+                client.BaseAddress = new Uri(url);
+
+                //Add accept header for JSON format
+                client.DefaultRequestHeaders.Accept.Add(
+                    new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+                //list data response
+                HttpResponseMessage response = client.GetAsync(url_param).Result; //blocking call
+                if (response.IsSuccessStatusCode)
+                {
+                    //parse the response body. blocking!
+                    var teams = response.Content.ReadAsAsync<IEnumerable<team>>().Result;
+                    foreach (var d in teams)
+                    {
+                        num_of_teams += 1; //i want this to return 2, currently returning 27
+                    }
+                }
+
+       
+                //total_goals += 1;
+            }
+
+            if (goals == null || !goals.Any())
+            {
+                //throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
+                //return goals;
+            }
+
+            //return goals;
+            return "number of teams in game " + game_goals_id + " = " + num_of_teams;
+        }
+
         // PUT: api/goals/5
         [ResponseType(typeof(void))]
         public IHttpActionResult Putgoal(int id, goal goal)
