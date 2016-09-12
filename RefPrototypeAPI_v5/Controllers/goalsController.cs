@@ -74,19 +74,25 @@ namespace RefPrototypeAPI_v5.Controllers
             return goals;
         }
 
-        // GET: api/goals?game_id={game_id}
-        public /*IEnumerable<goal>*/ string GetGoalsByTeamAndGame(int game_goals_id)
+        // GET: api/goals?game_goals_id={game_goals_id}
+        public /*IEnumerable<goal>*/ async System.Threading.Tasks.Task<string> GetGoalsByTeamAndGame(int game_goals_id)
         {
-            var url = "http://localhost:50588/api/teams";
-            var url_param = "?game_id=1";
+            var url = "http://localhost:50588/";
+            var url_param = "api/players/";
             var goals = db.goals.Where(t => t.game_id == game_goals_id).ToList();
-            var total_goals = 0;
-            var team_one_goals = 0;
-            var team_two_goals = 0;
-            var num_of_teams = 0;
+            int? team_one_id = 0;
+            int? team_two_id = 0;
+            int total_goals = 0;
+            int team_one_goals = 0;
+            int team_two_goals = 0;
+            int num_of_teams = 0;
+            int? playerteam = 0;
             //var int team_two;
             foreach (var goal in goals)
             {
+                var player_id = goal.player_id;
+                url_param += player_id;
+
                 //run a get request for team
                 HttpClient client = new HttpClient();
                 client.BaseAddress = new Uri(url);
@@ -99,26 +105,59 @@ namespace RefPrototypeAPI_v5.Controllers
                 HttpResponseMessage response = client.GetAsync(url_param).Result; //blocking call
                 if (response.IsSuccessStatusCode)
                 {
-                    //parse the response body. blocking!
-                    var teams = response.Content.ReadAsAsync<IEnumerable<team>>().Result;
-                    foreach (var d in teams)
+                    player player = await response.Content.ReadAsAsync<player>();
+                    playerteam = player.team_id;
+                    if (playerteam == team_one_id)
                     {
-                        num_of_teams += 1; //i want this to return 2, currently returning 27
+                        if (goal.is_own_goal == true)
+                        {
+                            team_two_goals += 1;
+                        }
+                        else
+                        {
+                            team_one_goals += 1;
+                        }
                     }
+                    else if (playerteam == team_two_id)
+                    {
+                        if (goal.is_own_goal == true)
+                        {
+                            team_one_goals += 1;
+                        }
+                        else
+                        {
+                            team_two_goals += 1;
+                        }
+                    }
+                    else if (team_one_id == 0)
+                    {
+                        team_one_id = playerteam;
+                        if (goal.is_own_goal == true)
+                        {
+                            team_two_goals += 1;
+                        }
+                        else
+                        {
+                            team_one_goals += 1;
+                        }
+                    }
+                    else
+                    {
+                        team_two_id = playerteam;
+                        if (goal.is_own_goal == true)
+                        {
+                            team_one_goals += 1;
+                        }
+                        else
+                        {
+                            team_two_goals += 1;
+                        }
+                    }
+
                 }
-
-       
-                //total_goals += 1;
             }
 
-            if (goals == null || !goals.Any())
-            {
-                //throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
-                //return goals;
-            }
-
-            //return goals;
-            return "number of teams in game " + game_goals_id + " = " + num_of_teams;
+            return "team one id = " + team_one_id + " goals = " + team_one_goals + ", team two id = " + team_two_id + " goals = " + team_two_goals;
         }
 
         // PUT: api/goals/5
