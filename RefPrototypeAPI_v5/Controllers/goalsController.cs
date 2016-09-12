@@ -9,6 +9,10 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using RefPrototypeAPI_v5.Models;
+using System.IO;
+using System.Runtime.Serialization.Json;
+using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 namespace RefPrototypeAPI_v5.Controllers
 {
@@ -75,10 +79,9 @@ namespace RefPrototypeAPI_v5.Controllers
         }
 
         // GET: api/goals?game_goals_id={game_goals_id}
-        public /*IEnumerable<goal>*/ async System.Threading.Tasks.Task<string> GetGoalsByTeamAndGame(int game_goals_id)
+        public  async System.Threading.Tasks.Task<Score> GetGoalsByTeamAndGame(int game_goals_id)
         {
-            var url = "http://localhost:50588/";
-            var url_param = "api/players/";
+            var url = "http://localhost:50588/api/players";
             var goals = db.goals.Where(t => t.game_id == game_goals_id).ToList();
             int? team_one_id = 0;
             int? team_two_id = 0;
@@ -90,9 +93,8 @@ namespace RefPrototypeAPI_v5.Controllers
             //var int team_two;
             foreach (var goal in goals)
             {
-                var player_id = goal.player_id;
-                url_param += player_id;
-
+                int? player_id = goal.player_id;
+                var url_param = url + "/" + player_id;
                 //run a get request for team
                 HttpClient client = new HttpClient();
                 client.BaseAddress = new Uri(url);
@@ -102,7 +104,9 @@ namespace RefPrototypeAPI_v5.Controllers
                     new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
                 //list data response
+               // HttpResponseMessage response = client.GetAsync(url_param).Result; //blocking call
                 HttpResponseMessage response = client.GetAsync(url_param).Result; //blocking call
+
                 if (response.IsSuccessStatusCode)
                 {
                     player player = await response.Content.ReadAsAsync<player>();
@@ -153,11 +157,13 @@ namespace RefPrototypeAPI_v5.Controllers
                             team_two_goals += 1;
                         }
                     }
-
                 }
             }
 
-            return "team one id = " + team_one_id + " goals = " + team_one_goals + ", team two id = " + team_two_id + " goals = " + team_two_goals;
+            Score score = new Score(team_one_id, team_one_goals, team_two_id, team_two_goals);
+            return score;
+       
+            //return "team one id = " + team_one_id + " goals = " + team_one_goals + ", team two id = " + team_two_id + " goals = " + team_two_goals;
         }
 
         // PUT: api/goals/5
@@ -239,5 +245,26 @@ namespace RefPrototypeAPI_v5.Controllers
         {
             return db.goals.Count(e => e.goal_id == id) > 0;
         }
+    }
+}
+
+[DataContract]
+public class Score
+{
+    [DataMember]
+    public int? Team_one_id { get; set; }
+    [DataMember]
+    public int Team_one_number_of_goals { get; set; }
+    [DataMember]
+    public int? Team_two_id { get; set; }
+    [DataMember]
+    public int Team_two_number_of_goals { get; set; }
+
+    public Score( int? team_one_id, int team_one_number_of_goals, int? team_two_id, int team_two_number_of_goals)
+    {
+        Team_one_id = team_one_id;
+        Team_one_number_of_goals = team_one_number_of_goals;
+        Team_two_id = team_two_id;
+        Team_two_number_of_goals = team_two_number_of_goals;
     }
 }
